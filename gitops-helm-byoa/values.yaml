@@ -43,11 +43,6 @@ harness:
   # -- Create cluster role for Argo CD and GitOps agent, required for in-cluster
   createClusterRoles: true
 
-  # Default Harness network policy rules used by all components
-  networkPolicy:
-    # -- Create NetworkPolicy objects for all components
-    create: true
-
   # -- Host for GitOps Service
   gitopsServerHost: ""
 
