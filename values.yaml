@@ -326,33 +326,3 @@ upgrader:
 
   # -- Docker image for upgrader
   image: harness/upgrader:latest
-
-# <---Duplicated Argo CD overrides for overridden templates--->
-
-fullnameOverride: argocd
-
-nameOverride: argocd
-
-global:
-  image:
-    repository: docker.io/harness/argocd
-    tag: v2.9.4
-    imagePullPolicy: Always
-  logging:
-    format: text
-
-repoServer:
-  name: repo-server
-  serviceAccount:
-    create: true
-
-applicationSet:
-  name: applicationset-controller
-
-controller:
-  name: application-controller
-  serviceAccount:
-    create: true
-
-redis:
-  name: redis
