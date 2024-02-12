@@ -1,4 +1,3 @@
-{{- $argo := (index .Values "argo-cd") -}}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
@@ -49,9 +48,7 @@ rules:
   - argoproj.io
   resources:
   - applications
-  {{- if $argo.applicationSet.enabled }}
   - applicationsets
-  {{- end }}
   - appprojects
   verbs:
   - create
