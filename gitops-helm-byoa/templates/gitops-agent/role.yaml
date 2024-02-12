@@ -71,14 +71,6 @@ rules:
   - list
   - watch
   - get
-{{- if eq (toString (index (coalesce $argo.server.config $argo.configs.cm) "exec.enabled")) "true" }}
-- apiGroups:
-  - ""
-  resources:
-  - pods/exec
-  verbs:
-  - create
-{{- end }}
 - apiGroups:
     - apps
   resources:
