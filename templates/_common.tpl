@@ -29,9 +29,6 @@ helm.sh/chart: {{ include "harness.chart" .context }}
 app.kubernetes.io/managed-by: {{ .context.Release.Service }}
 app.kubernetes.io/part-of: harness-gitops
 app.kubernetes.io/version: {{ include "harness.versionLabelValue" .context }}
-{{- with .context.Values.global.additionalLabels }}
-{{ toYaml . }}
-{{- end }}
 {{- end }}
 
 {{/*
@@ -43,9 +40,6 @@ helm.sh/chart: {{ include "harness.chart" .context }}
 app.kubernetes.io/managed-by: {{ .context.Release.Service }}
 app.kubernetes.io/part-of: harness-gitops
 app.kubernetes.io/version: {{ include "harness.versionLabelValue" .context }}
-{{- with .context.Values.global.additionalLabels }}
-{{ toYaml . }}
-{{- end }}
 {{- end }}
 
 {{/*
