@@ -4,7 +4,7 @@ This repository contains Helm charts for installing Harness GitOps Agents throug
 
 The charts can be added using following command:
 ```bash
-helm repo add gitops-agent-byoa https://harness.github.io/gitops-helm-byoa/
+helm repo add gitops-agent-byoa https://harness.github.io/gitops-helm-byoa/gitops-helm-byoa/
 ```
 
 Please refer to [Bring Your Own Argo CD into Harness GitOps](https://developer.harness.io/docs/continuous-delivery/gitops/connect-and-manage/multiple-argo-to-single-harness) for the steps needed to create and manage your BYOA agent installations.
