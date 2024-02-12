@@ -1,0 +1,363 @@
+## Harness GitOps Agent configuration
+## Ref: https://github.com/harness/gitops-helm
+## Documentation: https://developer.harness.io/docs/category/gitops
+
+# <---Harness specific overrides--->
+
+## Variable Overrides for Harness configuration
+harness:
+  nameOverride: harness
+  ## Harness specific identity data
+  identity:
+    # -- Account Identifier
+    accountIdentifier: ""
+
+    # -- Organization Identifier
+    orgIdentifier: ""
+
+    # -- Project Identifier
+    projectIdentifier: ""
+
+    # -- Agent Identifier
+    agentIdentifier: ""
+
+  configMap:
+    agentProtocol : "HTTP1"
+    http:
+      tlsEnabled: false
+      certPath: "/tmp/ca.bundle"
+      agentHttpTarget: ""
+    reconcile:
+      enabled: true
+      interval: 100
+      podsDiscovery: 120
+    logLevel: "debug"
+    agentFetchType: "POLLER"
+
+  secrets:
+    agentSecret: ""
+    caData:
+      enabled: false
+      secret: ""
+
+  # -- Create cluster role for Argo CD and GitOps agent, required for in-cluster
+  createClusterRoles: true
+
+  # Default Harness network policy rules used by all components
+  networkPolicy:
+    # -- Create NetworkPolicy objects for all components
+    create: true
+
+  # -- Host for GitOps Service
+  gitopsServerHost: ""
+
+  ## Disaster Recovery configuration
+  disasterRecovery:
+    # -- Enable Disaster Recovery Agent
+    enabled: false
+
+    # -- DR Agent Identifier
+    identifier: ""
+
+## Harness GitOps Agent
+agent:
+  # -- GitOps Agent entity name
+  name: gitops-agent
+
+  # -- GitOps Agent identifier name
+  harnessName: gitops-agent
+
+  # -- The number of agent pods to run
+  replicas: 1
+
+  # -- GitOps Agent image
+  image:
+    # -- Repository to use for GitOps Agent
+    # @default -- `""` (defaults to global.image.repository)
+    repository: harness/gitops-agent
+    # -- Tag to use for the GitOps Agent
+    # @default -- `""` (defaults to global.image.tag)
+    tag: v0.65.0
+    # -- Image pull policy for GitOps Agent
+    # @default -- `""` (defaults to global.image.imagePullPolicy)
+    imagePullPolicy: Always
+
+  ## Proxy config for GitOps Agent
+  proxy:
+    # -- Enable Proxy
+    enabled: false
+
+    # -- Add HTTP proxy
+    httpProxy: ""
+
+    # -- Add HTTPS proxy
+    httpsProxy: ""
+
+  ## Create an OpenShift agent
+  openshift:
+    enabled: false
+
+  serviceAccount:
+    # -- Create agent service account
+    create: true
+    # -- Agent service account name
+    name: gitops-agent
+    # -- Annotations applied to created service account
+    annotations: {}
+    # -- Labels applied to created service account
+    labels: {}
+    # -- Automount API credentials for the Service Account
+    automountServiceAccountToken: true
+
+  ## GitOps Agent Horizontal Pod Autoscaler
+  autoscaling:
+    # -- Enable Horizontal Pod Autoscaler ([HPA]) for the GitOps Agent
+    enabled: false
+    # -- Minimum number of replicas for the GitOps Agent [HPA]
+    minReplicas: 1
+    # -- Maximum number of replicas for the GitOps Agent [HPA]
+    maxReplicas: 5
+    # -- Average CPU utilization percentage for the GitOps Agent [HPA]
+    targetCPUUtilizationPercentage: 50
+    # -- Average memory utilization percentage for the GitOps Agent [HPA]
+    targetMemoryUtilizationPercentage: 50
+    # -- Configures the scaling behavior of the target in both Up and Down directions.
+    behavior: {}
+      # scaleDown:
+      #  stabilizationWindowSeconds: 300
+      #  policies:
+      #   - type: Pods
+      #     value: 1
+      #     periodSeconds: 180
+      # scaleUp:
+      #   stabilizationWindowSeconds: 300
+      #   policies:
+      #   - type: Pods
+    #     value: 2
+    #     periodSeconds: 60
+    # -- Configures custom HPA metrics for the Argo CD server
+    # Ref: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
+    metrics: []
+
+  ## GitOps Agent Pod Disruption Budget
+  ## Ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
+  pdb:
+    # -- Deploy a [PodDisruptionBudget] for the GitOps Agent
+    enabled: false
+    # -- Labels to be added to GitOps Agent pdb
+    labels: {}
+    # -- Annotations to be added to GitOps Agent pdb
+    annotations: {}
+    # -- Number of pods that are available after eviction as number or percentage (eg.: 50%)
+    # @default -- `""` (defaults to 0 if not specified)
+    minAvailable: ""
+    # -- Number of pods that are unavailable after eviction as number or percentage (eg.: 50%).
+    ## Has higher precedence over `server.pdb.minAvailable`
+    maxUnavailable: ""
+
+  ## Agent metrics service configuration
+  metrics:
+    # -- Deploy metrics service
+    enabled: false
+    service:
+      # -- Metrics service type
+      type: ClusterIP
+      # -- Metrics service clusterIP. `None` makes a "headless service" (no virtual IP)
+      clusterIP: ""
+      # -- Metrics service annotations
+      annotations: {}
+      # -- Metrics service labels
+      labels: {}
+      # -- Metrics service port
+      servicePort: 8083
+      # -- Metrics service port name
+      portName: http-metrics
+    serviceMonitor:
+      # -- Enable a prometheus ServiceMonitor
+      enabled: false
+      # -- Prometheus ServiceMonitor interval
+      interval: 30s
+      # -- Prometheus [RelabelConfigs] to apply to samples before scraping
+      relabelings: []
+      # -- Prometheus [MetricRelabelConfigs] to apply to samples before ingestion
+      metricRelabelings: []
+      # -- Prometheus ServiceMonitor selector
+      selector: {}
+      # prometheus: kube-prometheus
+
+      # -- Prometheus ServiceMonitor scheme
+      scheme: ""
+      # -- Prometheus ServiceMonitor tlsConfig
+      tlsConfig: {}
+      # -- Prometheus ServiceMonitor namespace
+      namespace: ""  # monitoring
+      # -- Prometheus ServiceMonitor labels
+      additionalLabels: {}
+      # -- Prometheus ServiceMonitor annotations
+      annotations: {}
+
+  # -- Host Network for Server pods
+  hostNetwork: false
+
+  # -- [DNS configuration]
+  dnsConfig: {}
+  # -- Alternative DNS policy for Server pods
+  dnsPolicy: "ClusterFirst"
+
+  # -- Annotations to be added to agent Deployment
+  deploymentAnnotations: {}
+
+  # -- Annotations to be added to agent pods
+  podAnnotations: {}
+
+  # -- Labels to be added to agentƒ pods
+  podLabels: {}
+
+  # -- Secrets with credentials to pull images from a private registry
+  # @default -- `[]` (defaults to global.imagePullSecrets)
+  imagePullSecrets: []
+
+  # -- Priority class for the repo server pods
+  # @default -- `""` (defaults to global.priorityClassName)
+  priorityClassName: ""
+
+  ## Readiness and liveness probes for default backend
+  ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
+  readinessProbe:
+    # -- Minimum consecutive failures for the [probe] to be considered failed after having succeeded
+    failureThreshold: 3
+    # -- Number of seconds after the container has started before [probe] is initiated
+    initialDelaySeconds: 10
+    # -- How often (in seconds) to perform the [probe]
+    periodSeconds: 10
+    # -- Minimum consecutive successes for the [probe] to be considered successful after having failed
+    successThreshold: 1
+    # -- Number of seconds after which the [probe] times out
+    timeoutSeconds: 1
+
+  livenessProbe:
+    # -- Minimum consecutive failures for the [probe] to be considered failed after having succeeded
+    failureThreshold: 3
+    # -- Number of seconds after the container has started before [probe] is initiated
+    initialDelaySeconds: 10
+    # -- How often (in seconds) to perform the [probe]
+    periodSeconds: 10
+    # -- Minimum consecutive successes for the [probe] to be considered successful after having failed
+    successThreshold: 1
+    # -- Number of seconds after which the [probe] times out
+    timeoutSeconds: 1
+
+  startupProbe:
+    # -- Minimum consecutive failures for the [probe] to be considered failed after having succeeded
+    failureThreshold: 32
+    # -- Number of seconds after the container has started before [probe] is initiated
+    initialDelaySeconds: 10
+    # -- How often (in seconds) to perform the [probe]
+    periodSeconds: 5
+
+  # -- terminationGracePeriodSeconds for container lifecycle hook
+  terminationGracePeriodSeconds: 30
+
+  # -- [Node selector]
+  # @default -- `{}` (defaults to global.nodeSelector)
+  nodeSelector: {}
+
+  # -- [Tolerations] for use with node taints
+  # @default -- `[]` (defaults to global.tolerations)
+  tolerations: []
+
+  # -- Assign custom [TopologySpreadConstraints] rules to the agent
+  # @default -- `[]` (defaults to global.topologySpreadConstraints)
+  ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
+  ## If labelSelector is left out, it will default to the labelSelector configuration of the deployment
+  topologySpreadConstraints: []
+  # - maxSkew: 1
+  #   topologyKey: topology.kubernetes.io/zone
+  #   whenUnsatisfiable: DoNotSchedule
+
+  # -- Additional command line arguments to pass to GitOps Agent
+  extraArgs: []
+
+  # -- Resource limits and requests for the GitOps Agent pods
+  resources:
+    requests:
+      memory: 512Mi
+      cpu: "1"
+    limits:
+      memory: 512Mi
+      cpu: "1"
+
+  # -- Agent container-level security context
+  # @default -- See [values.yaml]
+  containerSecurityContext:
+    runAsNonRoot: true
+    allowPrivilegeEscalation: false
+    seccompProfile:
+      type: RuntimeDefault
+    capabilities:
+      drop:
+        - ALL
+
+  # -- Additional containers to be added to the agent pod
+  ## Ref: https://argo-cd.readthedocs.io/en/stable/user-guide/config-management-plugins/
+  ## Note: Supports use of custom Helm templates
+  extraContainers: []
+
+  # -- Init containers to add to the agent pods
+  initContainers: []
+
+  # -- Additional volumes to the agent pod
+  volumes: []
+
+  # -- Additional volumeMounts to the agent main container
+  volumeMounts: []
+  #  - mountPath: /usr/local/bin/kubelogin
+  #    name: custom-tools
+  #    subPath: kubelogin
+
+## Harness GitOps Agent upgrader
+upgrader:
+  # -- Agent upgrader name
+  name: gitops-agent-upgrader
+
+  # -- Enable Harness GitOps agent upgrader
+  enabled: true
+
+  # -- Frequency of upgrader cron job
+  cron: "0 */4 * * *"
+
+  # -- Starting deadline for cron job
+  startDeadline: 20
+
+  # -- Docker image for upgrader
+  image: harness/upgrader:latest
+
+# <---Duplicated Argo CD overrides for overridden templates--->
+
+fullnameOverride: argocd
+
+nameOverride: argocd
+
+global:
+  image:
+    repository: docker.io/harness/argocd
+    tag: v2.9.4
+    imagePullPolicy: Always
+  logging:
+    format: text
+
+repoServer:
+  name: repo-server
+  serviceAccount:
+    create: true
+
+applicationSet:
+  name: applicationset-controller
+
+controller:
+  name: application-controller
+  serviceAccount:
+    create: true
+
+redis:
+  name: redis
