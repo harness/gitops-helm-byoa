@@ -86,6 +86,8 @@ spec:
           name: argocd-repo-server-tls
         - mountPath: /home/argocd
           name: plugins-home
+        - mountPath: /etc/mtls
+          name: mtls-certs
         - mountPath: /tmp
           name: tmp
         {{- if .Values.harness.secrets.caData.enabled }}
@@ -187,6 +189,15 @@ spec:
             path: tls.key
           - key: ca.crt
             path: ca.crt
+      - name: mtls-certs
+        secret:
+          secretName: {{ .Values.agent.name }}-mtls
+          optional: true
+          items:
+            - key: client.crt
+              path: client.crt
+            - key: client.key
+              path: client.key
       {{ if .Values.harness.secrets.caData.enabled }}
       - name: certvol
         secret:
