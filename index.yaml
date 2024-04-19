@@ -7,7 +7,7 @@ entries:
     digest: a14cd3213f7805b7189ad1e2f0b34997e4c90d4f5ae1e3b5a3b6c3c1e84351d0
     name: gitops-helm-byoa
     urls:
-    - https://harness.github.io/gitops-helm/releases/gitops-helm-byoa-1.1.0.tgz
+    - https://harness.github.io/gitops-helm-boa/releases/gitops-helm-byoa-1.1.0.tgz
     version: 1.1.0
   - apiVersion: v2
     created: "2024-04-19T19:34:33.484081+05:30"
@@ -15,6 +15,6 @@ entries:
     digest: 85b9aed8fcb53a0db1087027760e0584745f1725fd8ed4b2ee9348087db75662
     name: gitops-helm-byoa
     urls:
-    - https://harness.github.io/gitops-helm/releases/gitops-helm-byoa-1.0.0.tgz
+    - https://harness.github.io/gitops-helm-byoa/releases/gitops-helm-byoa-1.0.0.tgz
     version: 1.0.0
 generated: "2024-04-19T19:34:33.481734+05:30"
