@@ -45,7 +45,7 @@ harness:
     agentFetchType: "POLLER"
 
     # -- non-default Argo CD name overrides for Harness GitOps Agent
-	# -- this is matched against app.kubernetes.io/name label
+    # -- this is matched against app.kubernetes.io/name label
     argocd:
       repoServer: "argocd-repo-server"
       redis: "argocd-redis"
