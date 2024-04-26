@@ -45,6 +45,7 @@ harness:
     agentFetchType: "POLLER"
 
     # -- non-default Argo CD name overrides for Harness GitOps Agent
+    # -- this is matched against app.kubernetes.io/name label
     argocd:
       repoServer: "argocd-repo-server"
       redis: "argocd-redis"
@@ -52,6 +53,8 @@ harness:
       redisHaProxy: "argocd-redis-ha-haproxy"
       controller: "argocd-application-controller"
       applicationSet: "argocd-applicationset-controller"
+      repoServerSvc: ""
+      redisSvc: ""
 
   secrets:
     # -- DoNotEdit - GitOps Agent Secret uniquely identifies a GitOps Agent in the Service
@@ -89,6 +92,9 @@ agent:
 
   # -- The number of agent pods to run
   replicas: 1
+
+  # -- Enable High Availability for the GitOps Agent
+  highAvailability: false
 
   # -- GitOps Agent image
   image:

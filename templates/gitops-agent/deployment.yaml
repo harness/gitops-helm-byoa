@@ -86,19 +86,17 @@ spec:
           name: argocd-repo-server-tls
         - mountPath: /home/argocd
           name: plugins-home
-        - mountPath: /etc/mtls
-          name: mtls-certs
         - mountPath: /tmp
           name: tmp
+        - mountPath: /etc/mtls
+          name: mtls-certs
         {{- if .Values.harness.secrets.caData.enabled }}
         - mountPath: /tmp/ca.bundle
           name: certvol
           subPath: ca.bundle
         {{- end }}
-        {{- if .Values.agent.openshift.enabled }}
         - mountPath: /app/logs
           name: log-volume
-        {{- end }}
         startupProbe:
           exec:
             command:
@@ -194,10 +192,10 @@ spec:
           secretName: {{ .Values.agent.name }}-mtls
           optional: true
           items:
-            - key: client.crt
-              path: client.crt
-            - key: client.key
-              path: client.key
+          - key: client.crt
+            path: client.crt
+          - key: client.key
+            path: client.key
       {{ if .Values.harness.secrets.caData.enabled }}
       - name: certvol
         secret:
@@ -207,10 +205,8 @@ spec:
             - key: ca.bundle
               path: ca.bundle
       {{- end }}
-      {{- if .Values.agent.openshift.enabled }}
       - name: log-volume
         emptyDir: { }
-      {{- end }}
       {{- if .Values.agent.hostNetwork }}
       hostNetwork: {{ .Values.agent.hostNetwork }}
       {{- end }}
