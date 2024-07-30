@@ -401,7 +401,9 @@ redis:
 redis-ha:
   enabled: false
   # This value should be equal to redis-ha.fullname generated and set there from your redis-ha subchart 
-  fullName: ""
+  # This will be used to get redis auth details from given secret name generated from this field
+  # Usually is the same as the value .Values.harness.configmap.argocd.redisHa
+  name: "redis-ha"
   haproxy:
     enabled: true
   # -- Existing Secret to use for redis-ha authentication.

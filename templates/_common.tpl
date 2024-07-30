@@ -131,7 +131,7 @@ Create redis name and version as used by the chart label.
 {{- $redisHa := (index .Values "redis-ha") -}}
 {{- if $redisHa.enabled -}}
     {{- if $redisHa.haproxy.enabled -}}
-        {{- printf "%s-haproxy" ($redisHa.fullName) | trunc 63 | trimSuffix "-" -}}
+        {{- printf "%s-%s-haproxy" (index .Values "fullnameOverride") $redisHa.name | trunc 63 | trimSuffix "-" -}}
     {{- end -}}
 {{- else -}}
 {{- printf "%s-%s" (include "argo-cd.fullname" .) .Values.redis.name | trunc 63 | trimSuffix "-" -}}
