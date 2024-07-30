@@ -397,6 +397,17 @@ controller:
 redis:
   name: redis
 
+# Enable and set appropriate values from your argocd redis configuration if redis is being used in HA mode
+redis-ha:
+  enabled: false
+  # This value should be equal to redis-ha.fullname generated and set there from your redis-ha subchart 
+  fullName: ""
+  haproxy:
+    enabled: true
+  # -- Existing Secret to use for redis-ha authentication.
+  # By default the redis-secret-init Job from Argo-CD is generating this Secret.
+  existingSecret: argocd-redis
+
 # External Redis parameters
 externalRedis:
   # -- External Redis server host
