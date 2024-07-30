@@ -105,7 +105,7 @@ agent:
     repository: harness/gitops-agent
     # -- Tag to use for the GitOps Agent
     # @default -- `""` (defaults to global.image.tag)
-    tag: v0.73.0
+    tag: v0.77.0
     # -- Image pull policy for GitOps Agent
     # @default -- `""` (defaults to global.image.imagePullPolicy)
     imagePullPolicy: Always
@@ -396,6 +396,19 @@ controller:
 
 redis:
   name: redis
+
+# Enable and set appropriate values from your argocd redis configuration if redis is being used in HA mode
+redis-ha:
+  enabled: false
+  # This value should be equal to redis-ha.fullname generated and set there from your redis-ha subchart 
+  # This will be used to get redis auth details from given secret name generated from this field
+  # Usually is the same as the value .Values.harness.configmap.argocd.redisHa
+  name: "redis-ha"
+  haproxy:
+    enabled: true
+  # -- Existing Secret to use for redis-ha authentication.
+  # By default the redis-secret-init Job from Argo-CD is generating this Secret.
+  existingSecret: argocd-redis
 
 # External Redis parameters
 externalRedis:
