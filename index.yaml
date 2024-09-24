@@ -2,6 +2,14 @@ apiVersion: v1
 entries:
   gitops-helm-byoa:
   - apiVersion: v2
+    created: "2024-09-24T13:13:12.946261+05:30"
+    description: A Helm chart for Harness GitOps Agent through BYOA installation flows.
+    digest: 8f0e493a861c767ebbf29448732d2645ceb3b42d4cac90be8625b97bbbd85ad2
+    name: gitops-helm-byoa
+    urls:
+    - https://harness.github.io/gitops-helm-byoa/releases/gitops-helm-byoa-1.3.1.tgz
+    version: 1.3.1
+  - apiVersion: v2
     created: "2024-07-30T16:39:51.815015+05:30"
     description: A Helm chart for Harness GitOps Agent through BYOA installation flows.
     digest: ae43b74df40e9b14399468dbe28dd7fb02302305c0251f35c6f229b0974bba0b
@@ -49,4 +57,4 @@ entries:
     urls:
     - https://harness.github.io/gitops-helm-byoa/releases/gitops-helm-byoa-1.0.0.tgz
     version: 1.0.0
-generated: "2024-06-18T15:17:48.530535+02:00"
+generated: "2024-09-24T13:13:12.941363+05:30"
