@@ -105,7 +105,7 @@ agent:
     repository: harness/gitops-agent
     # -- Tag to use for the GitOps Agent
     # @default -- `""` (defaults to global.image.tag)
-    tag: v0.77.0
+    tag: v0.80.0
     # -- Image pull policy for GitOps Agent
     # @default -- `""` (defaults to global.image.imagePullPolicy)
     imagePullPolicy: Always
@@ -184,9 +184,10 @@ agent:
     maxUnavailable: ""
 
   ## Agent metrics service configuration
+  addPrometheusAnnotations: false
   metrics:
     # -- Deploy metrics service
-    enabled: false
+    enabled: true 
     service:
       # -- Metrics service type
       type: ClusterIP
@@ -197,7 +198,7 @@ agent:
       # -- Metrics service labels
       labels: {}
       # -- Metrics service port
-      servicePort: 8083
+      servicePort: 2112 
       # -- Metrics service port name
       portName: http-metrics
     serviceMonitor:
