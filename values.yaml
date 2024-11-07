@@ -368,7 +368,6 @@ upgrader:
     clientCertificateFilePath: /etc/mtls/client.crt
     clientCertificateKeyFilePath: /etc/mtls/client.key
 
-
 # <---Duplicated Argo CD overrides for overridden templates--->
 
 fullnameOverride: argocd
