@@ -137,3 +137,19 @@ Create redis name and version as used by the chart label.
 {{- printf "%s-%s" (include "argo-cd.fullname" .) .Values.redis.name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 {{- end -}}
+
+
+{{/*
+Renders a value that contains template.
+Usage:
+{{ include "harnesscommon.tplvalues.render" ( dict "value" .Values.path.to.the.Value "context" $) }}
+*/}}
+{{- define "harnesscommon.tplvalues.render" -}}
+    {{- if typeIs "string" .value }}
+        {{- tpl .value .context }}
+    {{- else }}
+        {{- if .value }}
+            {{- tpl (.value | toYaml) .context }}
+        {{- end }}
+    {{- end }}
+{{- end -}}
