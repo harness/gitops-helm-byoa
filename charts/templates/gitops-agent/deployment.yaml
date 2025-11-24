@@ -136,11 +136,9 @@ spec:
         - mountPath: /app/logs
           name: log-volume
         startupProbe:
-          exec:
-            command:
-              - test
-              - -s
-              - logs/agent.log
+          httpGet:
+            path: /healthz
+            port: 8090
           initialDelaySeconds: {{ .Values.agent.startupProbe.initialDelaySeconds }}
           periodSeconds: {{ .Values.agent.startupProbe.periodSeconds }}
           failureThreshold: {{ .Values.agent.startupProbe.failureThreshold }}
