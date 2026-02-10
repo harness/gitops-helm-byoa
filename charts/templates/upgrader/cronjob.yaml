@@ -39,7 +39,7 @@ spec:
                 - name: PROXY_PASSWORD
                   value: {{ .Values.upgrader.config.proxyPassword }}
                 - name: NO_PROXY
-                  value: localhost,{{ include "argocd.serviceName" (dict "context" . "component" "repo-server" "Values" .Values) | default "argocd-repo-server" }},{{ include "argocd.redisServiceName" . | default "argocd-redis" }},127.0.0.1,$(KUBERNETES_SERVICE_HOST),kubernetes.default.svc,{{ .Values.agent.name | default "gitops-agent" }}
+                  value: localhost,{{ .Values.harness.configMap.argocd.repoServerSvc | default "argocd-repo-server" }},{{ include "redisServer" . | default "argocd-redis" }},127.0.0.1,$(KUBERNETES_SERVICE_HOST),kubernetes.default.svc,{{ .Values.agent.name | default "gitops-agent" }}
             {{- end }}
                 - name: UPGRADER_TOKEN
                   valueFrom:
