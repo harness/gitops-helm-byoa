@@ -140,6 +140,7 @@ agent:
   ## Create an OpenShift agent
   openshift:
     enabled: false
+
   service:
     enabled: true
     type: ClusterIP
@@ -148,7 +149,6 @@ agent:
     # clusterIP: None   # (optional, only if you want a headless service)
     labels: {}
     annotations: {}
-
 
   serviceAccount:
     # -- Create agent service account
