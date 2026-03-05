@@ -148,6 +148,9 @@ spec:
         - containerPort: 2112
           name: metrics
           protocol: TCP
+        - containerPort: 7910
+          name: render
+          protocol: TCP
         readinessProbe:
           httpGet:
             path: /healthz
