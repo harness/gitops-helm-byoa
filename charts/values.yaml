@@ -478,3 +478,14 @@ externalRedis:
   existingSecret: ""
   # -- External Redis Secret annotations
   secretAnnotations: {}
+  tls:
+    # -- Enable TLS when connecting to external Redis
+    enabled: false
+    # -- Skip Redis server certificate validation
+    insecureSkipVerify: false
+    # -- K8s secret containing ca.crt (and optionally client.crt + client.key for mTLS)
+    existingSecret: ""
+    # -- Enable Redis client certificate authentication (mTLS)
+    clientCertEnabled: false
+    # -- Mount path for Redis TLS certificates inside the container
+    mountPath: "/etc/redis-tls"
