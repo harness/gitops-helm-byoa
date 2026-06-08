@@ -137,6 +137,9 @@ agent:
     # -- Add HTTPS proxy
     httpsProxy: ""
 
+    # -- Extra hosts/CIDRs to bypass the proxy, comma-separated (appended to the built-in defaults)
+    noProxy: ""
+
   ## Create an OpenShift agent
   openshift:
     enabled: false
@@ -411,7 +414,6 @@ upgrader:
     proxyHost: ""
     proxyPort: ""
     proxyScheme: ""
-    noProxy: ""
     proxyUser: ""
     proxyPassword: ""
 
