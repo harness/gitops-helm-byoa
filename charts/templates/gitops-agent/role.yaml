@@ -78,6 +78,12 @@ rules:
   - watch
   - get
 - apiGroups:
+  - ""
+  resources:
+  - pods/exec
+  verbs:
+  - create
+- apiGroups:
     - apps
   resources:
     - deployments
