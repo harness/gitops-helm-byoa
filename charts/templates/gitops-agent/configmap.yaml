@@ -35,7 +35,7 @@ data:
   {{-  if .Values.agent.proxy.enabled }}
   HTTPS_PROXY: {{ .Values.agent.proxy.httpsProxy }}
   HTTP_PROXY: {{ .Values.agent.proxy.httpProxy }}
-  NO_PROXY: localhost,{{ .Values.harness.configMap.argocd.repoServerSvc | default "argocd-repo-server" }},{{ include "redisServer" . | default "argocd-redis" }},127.0.0.1,$(KUBERNETES_SERVICE_HOST),kubernetes.default.svc,{{ .Values.agent.name | default "gitops-agent" }}
+  NO_PROXY: localhost,{{ .Values.harness.configMap.argocd.repoServerSvc | default "argocd-repo-server" }},{{ include "redisServer" . | default "argocd-redis" }},127.0.0.1,$(KUBERNETES_SERVICE_HOST),kubernetes.default.svc,{{ .Values.agent.name | default "gitops-agent" }}{{ if .Values.agent.proxy.noProxy }},{{ .Values.agent.proxy.noProxy }}{{ end }}
   {{- end }}
   {{- if .Values.externalRedis.host }}
   REDIS_SERVER: {{ .Values.externalRedis.host }}:{{ .Values.externalRedis.port }}
