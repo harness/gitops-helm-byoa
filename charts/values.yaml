@@ -60,6 +60,13 @@ harness:
       redisSvc: ""
       redisHaProxySvc: "argocd-redis-ha-haproxy"
 
+      repoServerMetricsAddr: "argocd-repo-server-metrics:8084"
+      appControllerMetricsAddr: "argocd-application-controller-metrics:8082"
+      appSetControllerMetricsAddr: "argocd-applicationset-controller-metrics:8080"
+      repoServerMetricsSvc: ""
+      appControllerMetricsSvc: ""
+      appSetControllerMetricsSvc: ""
+
   secrets:
     # -- DoNotEdit - GitOps Agent Secret uniquely identifies a GitOps Agent in the Service
     agentSecret: ""
