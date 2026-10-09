@@ -30,6 +30,9 @@ data:
   GITOPS_ARGOCD_REDIS_HA_PROXY: {{ .Values.harness.configMap.argocd.redisHaProxy }}
   GITOPS_ARGOCD_APP_CONTROLLER: {{ .Values.harness.configMap.argocd.controller }}
   GITOPS_ARGOCD_APPSET_CONTROLLER: {{ .Values.harness.configMap.argocd.applicationSet }}
+  GITOPS_AGENT_ARGOCD_REPO_SERVER_METRICS_ADDR: {{ if .Values.harness.configMap.argocd.repoServerMetricsSvc }}{{ .Values.harness.configMap.argocd.repoServerMetricsSvc }}:8084{{ else }}{{ .Values.harness.configMap.argocd.repoServerMetricsAddr }}{{ end }}
+  GITOPS_AGENT_ARGOCD_APP_CONTROLLER_METRICS_ADDR: {{ if .Values.harness.configMap.argocd.appControllerMetricsSvc }}{{ .Values.harness.configMap.argocd.appControllerMetricsSvc }}:8082{{ else }}{{ .Values.harness.configMap.argocd.appControllerMetricsAddr }}{{ end }}
+  GITOPS_AGENT_ARGOCD_APPSET_CONTROLLER_METRICS_ADDR: {{ if .Values.harness.configMap.argocd.appSetControllerMetricsSvc }}{{ .Values.harness.configMap.argocd.appSetControllerMetricsSvc }}:8080{{ else }}{{ .Values.harness.configMap.argocd.appSetControllerMetricsAddr }}{{ end }}
   GITOPS_AGENT_AVAILABILITY_MODE: {{ if .Values.agent.highAvailability }}HA{{ else }}NON-HA{{ end }}
   ARGOCD_SERVER_REPO_SERVER: {{ if .Values.harness.configMap.argocd.repoServerSvc }} {{ .Values.harness.configMap.argocd.repoServerSvc }}:8081{{ else }}{{ .Values.harness.configMap.argocd.repoServer }}:8081{{ end }}
   {{-  if .Values.agent.proxy.enabled }}
